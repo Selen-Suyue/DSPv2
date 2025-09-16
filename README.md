@@ -28,71 +28,29 @@ Please following the [installation guide](assets/docs/INSTALL.md) to install the
 Our original datasets are collected and organized by hdf5.
 Each demo(trajectory) is formulated like:
 ```
-├─ Group: /command_poses_dict
-  └─ Dataset: astribot_arm_left (Shape: (299, 7), Dtype: float64)
-  └─ Dataset: astribot_arm_right (Shape: (299, 7), Dtype: float64)
-  └─ Dataset: astribot_chassis (Shape: (299, 7), Dtype: float64)
-  └─ Dataset: astribot_gripper_left (Shape: (299, 1), Dtype: float64)
-  └─ Dataset: astribot_gripper_right (Shape: (299, 1), Dtype: float64)
-  └─ Dataset: astribot_head (Shape: (299, 7), Dtype: float64)
-  └─ Dataset: astribot_torso (Shape: (299, 7), Dtype: float64)
-  └─ Dataset: command (Shape: (299, 35), Dtype: float64)
-  └─ Dataset: merge_pose (Shape: (299, 37), Dtype: float64)
-  └─ Dataset: timestamp (Shape: (299,), Dtype: float64)
 ├─ Group: /images_dict
   ├─ Group: /images_dict/head
-    └─ Dataset: depth (Shape: (11682496,), Dtype: uint8)
-    └─ Dataset: depth_size (Shape: (299,), Dtype: float64)
-    └─ Dataset: depth_timestamp (Shape: (299,), Dtype: float64)
-    └─ Dataset: rgb (Shape: (51377383,), Dtype: uint8)
-    └─ Dataset: rgb_size (Shape: (299,), Dtype: float64)
-    └─ Dataset: rgb_timestamp (Shape: (299,), Dtype: float64)
+    └─ Dataset: depth (Shape: (174, 720, 1280), Dtype: uint16)
+    └─ Dataset: rgb (Shape: (174, 720, 1280, 3), Dtype: uint8)
+    └─ ...
   ├─ Group: /images_dict/left
-    └─ Dataset: depth (Shape: (45488900,), Dtype: uint8)
-    └─ Dataset: depth_size (Shape: (299,), Dtype: float64)
-    └─ Dataset: depth_timestamp (Shape: (299,), Dtype: float64)
-    └─ Dataset: rgb (Shape: (8966387,), Dtype: uint8)
-    └─ Dataset: rgb_size (Shape: (299,), Dtype: float64)
-    └─ Dataset: rgb_timestamp (Shape: (299,), Dtype: float64)
+    └─ ...
   ├─ Group: /images_dict/right
-    └─ Dataset: depth (Shape: (46134626,), Dtype: uint8)
-    └─ Dataset: depth_size (Shape: (299,), Dtype: float64)
-    └─ Dataset: depth_timestamp (Shape: (299,), Dtype: float64)
-    └─ Dataset: rgb (Shape: (10260913,), Dtype: uint8)
-    └─ Dataset: rgb_size (Shape: (299,), Dtype: float64)
-    └─ Dataset: rgb_timestamp (Shape: (299,), Dtype: float64)
+    └─ ...
   ├─ Group: /images_dict/torso
-    └─ Dataset: depth (Shape: (75521337,), Dtype: uint8)
-    └─ Dataset: depth_size (Shape: (299,), Dtype: float64)
-    └─ Dataset: depth_timestamp (Shape: (299,), Dtype: float64)
-    └─ Dataset: rgb (Shape: (54908944,), Dtype: uint8)
-    └─ Dataset: rgb_size (Shape: (299,), Dtype: float64)
-    └─ Dataset: rgb_timestamp (Shape: (299,), Dtype: float64)
+    └─ ...
 ├─ Group: /joints_dict
-  └─ Dataset: command_timestamp (Shape: (299,), Dtype: float64)
-  └─ Dataset: joints_position_command (Shape: (299, 25), Dtype: float64)
-  └─ Dataset: joints_position_state (Shape: (299, 25), Dtype: float64)
-  └─ Dataset: joints_velocity_state (Shape: (299, 25), Dtype: float64)
-  └─ Dataset: state_timestamp (Shape: (299,), Dtype: float64)
+  └─ Dataset: joints_position_state (Shape: (174, 25), Dtype: float64)
+  └─ ...
 ├─ Group: /poses_dict
-  └─ Dataset: astribot_arm_left (Shape: (299, 7), Dtype: float64)
-  └─ Dataset: astribot_arm_left_timestamp (Shape: (299,), Dtype: float64)
-  └─ Dataset: astribot_arm_right (Shape: (299, 7), Dtype: float64)
-  └─ Dataset: astribot_arm_right_timestamp (Shape: (299,), Dtype: float64)
-  └─ Dataset: astribot_chassis (Shape: (299, 7), Dtype: float64)
-  └─ Dataset: astribot_chassis_timestamp (Shape: (299,), Dtype: float64)
-  └─ Dataset: astribot_gripper_left (Shape: (299, 1), Dtype: float64)
-  └─ Dataset: astribot_gripper_right (Shape: (299, 1), Dtype: float64)
-  └─ Dataset: astribot_head (Shape: (299, 7), Dtype: float64)
-  └─ Dataset: astribot_head_timestamp (Shape: (299,), Dtype: float64)
-  └─ Dataset: astribot_torso (Shape: (299, 7), Dtype: float64)
-  └─ Dataset: astribot_torso_timestamp (Shape: (299,), Dtype: float64)
-  └─ Dataset: merge_pose (Shape: (299, 37), Dtype: float64)
-└─ Dataset: time (Shape: (299,), Dtype: float64)
-----------------------------------------
+  └─ Dataset: astribot_arm_left (Shape: (174, 7), Dtype: float64)
+  └─ Dataset: astribot_arm_right (Shape: (174, 7), Dtype: float64)
+  └─ ...
+  └─ Dataset: merge_pose (Shape: (174, 37), Dtype: float64)
+├─ ...
 ```
 where we use the multi-view images and head-cam depth, `pose_dict/merge_pose` is used for organize state and actions, which serves as a combination of
-`[chassis pose, torso pose, left arm pose, left gripper, right arm pose, right gripper, head pose]`. They are all relative pose based on the chassis. The chassis's movement is based on the world frame, saved as the first 3 dimension in `joints_dict/joints_position_state`. You can ignore other data in hdf5.
+`[chassis pose, torso pose, left arm pose, left gripper, right arm pose, right gripper, head pose]`. They are all relative pose to the chassis. The chassis's movement is based on the world frame, saved as the first 3 dimension in `joints_dict/joints_position_state`. You can ignore other data in hdf5.
 
 As for the point cloud projection, sampling in conventional methods, voxelization in DSPv2, are provided in [`dataset/preprocess_data.py.py`](dataset/preprocess_data.py). It also provides a function for calculating delta of chassis movement. Using [`dataset/preprocess_data.py.py`](dataset/preprocess_data.py) to process data is essential for accelerating training.
 
