@@ -342,7 +342,7 @@ def main():
         for loop_idx in range(actions.shape[0]):
             if rospy.is_shutdown(): break
             action = actions[loop_idx]
-            astribot_actions = [action[3:10], action[10:17], 1.2*action[17:18], action[18:25], 1.2*action[25:26], action[26:33]]
+            astribot_actions = [action[3:10], action[10:17], action[17:18], action[18:25], action[25:26], action[26:33]]
             move_base += action[:3]
             if args.move:
                 astribot.move_joints_position(['astribot_chassis'], [move_base] ,duration=args.duration, use_wbc=True)
