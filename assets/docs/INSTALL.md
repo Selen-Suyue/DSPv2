@@ -6,7 +6,7 @@ Please follow the instructions to install the conda environments and the depende
 
 1. Create a new conda environment and activate the environment.
     ```bash
-    conda create -n dspv2 python=3.8
+    conda create -n dspv2 python=3.10.11
     conda activate dspv2
     ```
 
