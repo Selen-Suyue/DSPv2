@@ -12,9 +12,9 @@
 
 ![teaser](assets/images/teaser.png)
 ## 🛫 Getting Started
-We have introduced both [DINOv3 (As Default)](https://github.com/facebookresearch/dinov3) and [DINOv2](https://github.com/facebookresearch/dinov2) as the 2D Encoder here. You can refer [policy](policy/policy.py) and [v_model](policy/v_model.py) to look up and change the setup. 
+We have introduced both **[DINOv3 (As Default)](https://github.com/facebookresearch/dinov3)** and **[DINOv2](https://github.com/facebookresearch/dinov2)** as the 2D Encoder here. You can refer [policy](policy/policy.py) and [v_model](policy/v_model.py) to look up and change the setup. 
 
-The v1 version of DSP: [Dense Policy](https://selen-suyue.github.io/DspNet/). You can use its [Dense Head](https://github.com/Selen-Suyue/DensePolicy/blob/main/policy/dense_policy.py) for action generation easily.
+The v1 version of *DSP* : *[Dense Policy](https://selen-suyue.github.io/DspNet/)*. You can use its *[Dense Head](https://github.com/Selen-Suyue/DensePolicy/blob/main/policy/dense_policy.py)* for action generation easily.
 
 ### ⚡️ Quick Follow
 Refer [policy](policy/policy.py) to follow DSPv2 easily and smoothly.
@@ -52,8 +52,9 @@ Each demo(trajectory) is formulated like:
 where we use the multi-view images and head-cam depth, `pose_dict/merge_pose` is used for organize state and actions, which serves as a combination of
 `[chassis pose, torso pose, left arm pose, left gripper, right arm pose, right gripper, head pose]`. They are all relative pose to the chassis. The chassis's movement is based on the world frame, saved as the first 3 dimension in `joints_dict/joints_position_state`. You can ignore other data in hdf5.
 
-As for the point cloud projection, sampling in conventional methods, voxelization in DSPv2, are provided in [`dataset/preprocess_data.py.py`](dataset/preprocess_data.py). It also provides a function for calculating delta of chassis movement. Using [`dataset/preprocess_data.py.py`](dataset/preprocess_data.py) to process data is essential for accelerating training.
+As for the point cloud projection, sampling in conventional methods, voxelization in DSPv2, are provided in [`dataset/preprocess_data.py.py`](dataset/preprocess_data.py). It also provides a function for calculating delta of chassis movement. Using [`dataset/preprocess_data.py.py`](dataset/preprocess_data.py) to process data is **essential for accelerating training**.
 
+We provide a dummy hdf5 data at [here](https://huggingface.co/datasets/Selen123/dummy-dspv2), you can refer its structure by [utils/hdf5_view.py](utils/hdf5_view.py). You can also process it by [`dataset/preprocess_data.py`](dataset/preprocess_data.py). **Note**: It may cause some pointcloud without points since it's dummy data.
 
 ### 🧑🏻‍💻 Training
 Before training, we recommend to calculate the 5%-95% min-max value of each task for normalization. For each task, just follow [`utils/minmax.py`](utils/minmax.py) and save the value in [`dataset/pose.json`](dataset/pose.json), named as `your_task_name`. Add `--task your_task_name` in `train.sh`. Then embark your training:
