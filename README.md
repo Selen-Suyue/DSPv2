@@ -73,14 +73,17 @@ python eval.py
 
 ## ✍️ Citation
 
-<!-- ```bibtex
-@article{su2025dense,
-  title={Dense Policy: Bidirectional Autoregressive Learning of Actions},
-  author={Su, Yue and Zhan, Xinyu and Fang, Hongjie and Xue, Han and Fang, Hao-Shu and Li, Yong-Lu and Lu, Cewu and Yang, Lixin},
-  journal={arXiv preprint arXiv:2503.13217},
-  year={2025}
+```bibtex
+@misc{dspv2,
+      title={DSPv2: Improved Dense Policy for Effective and Generalizable Whole-body Mobile Manipulation}, 
+      author={Yue Su and Chubin Zhang and Sijin Chen and Liufan Tan and Yansong Tang and Jianan Wang and Xihui Liu},
+      year={2025},
+      eprint={2509.16063},
+      archivePrefix={arXiv},
+      primaryClass={cs.RO},
+      url={https://arxiv.org/abs/2509.16063}, 
 }
-``` -->
+```
 
 ## 📃 License
 
