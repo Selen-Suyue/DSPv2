@@ -13,6 +13,7 @@ Please follow the instructions to install the conda environments and the depende
 2. Install necessary dependencies.
     ```bash
     conda install cudatoolkit=11.x
+    pip install torch torchvision
     pip install -r requirements.txt
     ```
 
